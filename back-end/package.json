@@ -1,0 +1,18 @@
+{
+  "name": "hypertube-backend",
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:torrent": "npm run dev --workspace=torrent-server"
+  },
+  "author": "Du Than",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
