@@ -14,7 +14,7 @@ app.get('/stream', (req, res) => {
 
   // Add torrent
   client.add(magnet, (torrent) => {
-    const file = torrent.files.find(f => f.name.endsWith('.mp4') || f.name.endsWith('.mkv'));
+    const file = torrent.files.find(f => f.name.endsWith('.mp4'));
 
     if (!file) {
       console.error('❌ No video file found in torrent');
