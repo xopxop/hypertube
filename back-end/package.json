@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "start": "npm-run-all --parallel dev:*",
-    "dev:torrent-server": "npm run dev --workspace=torrent-server"
+    "dev:torrent-server": "npm run dev --workspace=torrent-server",
+    "dev:user-server": "npm run dev --workspace=user-server"
   },
   "author": "Du Than",
   "dependencies": {

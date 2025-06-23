@@ -5,13 +5,14 @@ const pool = new Pool({
   connectionString: DATABASE_URL,
 });
 
-const connectToPostgreSQL = () =>
-  pool
-    .connect()
-    .then(() => console.log("✅ Connected to PostgreSQL"))
-    .catch((err) => {
-      console.error("❌ PostgreSQL connection error:", err);
-      process.exit(1);
-    });
+const connectToPostgreSqlAsync = async () => {
+  try {
+    await pool.connect();
+    console.log("✅ Connected to PostgreSQL");
+  } catch (error) {
+    console.error("❌ PostgreSQL connection error:", err);
+    process.exit(1);
+  };
+}
 
-export { connectToPostgreSQL };
+export { connectToPostgreSqlAsync };
