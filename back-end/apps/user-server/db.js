@@ -15,4 +15,4 @@ const connectToPostgreSqlAsync = async () => {
   };
 }
 
-export { connectToPostgreSqlAsync };
+export { connectToPostgreSqlAsync, pool as db};

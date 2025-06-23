@@ -2,7 +2,7 @@ import express from 'express';
 import WebTorrent from 'webtorrent';
 
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 const client = new WebTorrent();
 
