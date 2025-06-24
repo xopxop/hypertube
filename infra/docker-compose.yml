@@ -1,0 +1,9 @@
+services:
+  postgres:
+    extends:
+      file: ./postgres/docker-compose.yml
+      service: postgres
+
+networks:
+  default:
+    name: hypertube-net
