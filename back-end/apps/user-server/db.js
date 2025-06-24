@@ -8,9 +8,9 @@ const pool = new Pool({
 const connectToPostgreSqlAsync = async () => {
   try {
     await pool.connect();
-    console.log("✅ Connected to PostgreSQL");
+    console.log("✅ User server: Connected to PostgreSQL");
   } catch (error) {
-    console.error("❌ PostgreSQL connection error:", err);
+    console.error("❌ User server: PostgreSQL connection error:", err);
     process.exit(1);
   };
 }

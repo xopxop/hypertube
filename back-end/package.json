@@ -1,13 +1,17 @@
 {
   "name": "hypertube-backend",
   "version": "1.0.0",
+  "type": "module",
   "workspaces": [
     "apps/*"
   ],
   "scripts": {
     "start": "npm-run-all --parallel dev:*",
+    "dev:gateway-server": "npm run dev --workspace=gateway-server",
     "dev:torrent-server": "npm run dev --workspace=torrent-server",
-    "dev:user-server": "npm run dev --workspace=user-server"
+    "dev:user-server": "npm run dev --workspace=user-server",
+    "dev:auth-server": "npm run dev --workspace=auth-server"
+
   },
   "author": "Du Than",
   "dependencies": {
