@@ -20,12 +20,17 @@ proxyRoutes.use(
   createProxyMiddleware({
     target: authServerPath,
     changeOrigin: true,
-    onProxyReq: (proxyReq, req, res) => {
-      console.log(`[PROXY] ${req.method} ${req.url} -> ${authServerPath}`);
+    pathRewrite: {
+      "^/api/auth": "",
     },
-    onError: (err, req, res) => {
-      console.error(`[PROXY ERROR] Auth server unavailable:`, err.message);
-      res.status(503).json({ error: "Auth service unavailable" });
+    on: {
+      proxyReq: (proxyReq, req, res) => {
+        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${authServerPath}${proxyReq.path}`);
+      },
+      error: (err, req, res) => {
+        console.error(`[PROXY ERROR] Auth server unavailable:`, err.message);
+        res.status(503).json({ error: "Auth service unavailable" });
+      },
     },
   }),
 );
@@ -35,12 +40,17 @@ proxyRoutes.use(
   createProxyMiddleware({
     target: torrentServerPath,
     changeOrigin: true,
-    onProxyReq: (proxyReq, req, res) => {
-      console.log(`[PROXY] ${req.method} ${req.url} -> ${torrentServerPath}`);
+    pathRewrite: {
+      "^/api/torrent": "",
     },
-    onError: (err, req, res) => {
-      console.error(`[PROXY ERROR] Torrent server unavailable:`, err.message);
-      res.status(503).json({ error: "Torrent service unavailable" });
+    on: {
+      proxyReq: (proxyReq, req, res) => {
+        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${torrentServerPath}${proxyReq.path}`);
+      },
+      error: (err, req, res) => {
+        console.error(`[PROXY ERROR] Torrent server unavailable:`, err.message);
+        res.status(503).json({ error: "Torrent service unavailable" });
+      },
     },
   }),
 );
@@ -50,12 +60,17 @@ proxyRoutes.use(
   createProxyMiddleware({
     target: userServerPath,
     changeOrigin: true,
-    onProxyReq: (proxyReq, req, res) => {
-      console.log(`[PROXY] ${req.method} ${req.url} -> ${userServerPath}`);
+    pathRewrite: {
+      "^/api/user": "",
     },
-    onError: (err, req, res) => {
-      console.error(`[PROXY ERROR] User server unavailable:`, err.message);
-      res.status(503).json({ error: "User service unavailable" });
+    on: {
+      proxyReq: (proxyReq, req, res) => {
+        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${userServerPath}${proxyReq.path}`);
+      },
+      error: (err, req, res) => {
+        console.error(`[PROXY ERROR] User server unavailable:`, err.message);
+        res.status(503).json({ error: "User service unavailable" });
+      },
     },
   }),
 );
