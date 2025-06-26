@@ -1,7 +1,7 @@
 import express, { json } from 'express';
 import { PORT } from './config.js';
 import routes from './routes.js';
-import { connectToPostgreSqlAsync } from './db.js';
+import { connectToPostgreSqlAsync } from '../../db/db.js';
 
 await connectToPostgreSqlAsync();
 

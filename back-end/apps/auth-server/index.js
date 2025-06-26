@@ -1,10 +1,14 @@
 import express from 'express';
-import dotenv from 'dotenv';
-dotenv.config({ path: '../../.env.common' })
+import { PORT } from './config.js';
+import routes from './routes.js';
+import { connectToPostgreSqlAsync } from '../../db/db.js';
 
-const PORT = process.env.AUTH_SERVER_PORT;
 const app = express();
 
-app.listen(process.env.PORT, () => {
-  console.log(`✅ Auth server is running on port http://localhost:${PORT}`);
+app.use(express.json());
+app.use('/', routes);
+
+await connectToPostgreSqlAsync();
+app.listen(PORT, () => {
+  console.log(`✅ Auth server is running on http://localhost:${PORT}`);
 });

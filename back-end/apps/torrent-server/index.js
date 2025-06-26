@@ -1,10 +1,9 @@
 import express from 'express';
 import WebTorrent from 'webtorrent';
+import { PORT } from './config.js';
 
 const app = express();
-const PORT = 3001;
 
-const client = new WebTorrent();
 
 app.get('/stream', (req, res) => {
   const magnet = req.query.magnet;
