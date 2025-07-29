@@ -19,7 +19,7 @@ routes.post('/register', async (req, res) => {
     await createUserAsync(username, hashedPassword);
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal SERVICE error' });
   }
 });
 
@@ -38,7 +38,7 @@ routes.post('/login', async (req, res) => {
     const token = sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
     res.json({ token, user: { id: user.id, username: user.username } });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal SERVICE error' });
   }
 });
 

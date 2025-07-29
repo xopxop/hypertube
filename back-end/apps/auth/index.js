@@ -10,5 +10,5 @@ app.use('/', routes);
 
 await connectToPostgreSqlAsync();
 app.listen(PORT, () => {
-  console.log(`✅ Auth server is running on http://localhost:${PORT}`);
+  console.log(`✅ Auth SERVICE is running on http://localhost:${PORT}`);
 });

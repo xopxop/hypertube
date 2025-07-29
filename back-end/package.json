@@ -7,10 +7,10 @@
   ],
   "scripts": {
     "start": "npm-run-all --parallel dev:*",
-    "dev:gateway-server": "npm run dev --workspace=gateway-server",
-    "dev:torrent-server": "npm run dev --workspace=torrent-server",
-    "dev:user-server": "npm run dev --workspace=user-server",
-    "dev:auth-server": "npm run dev --workspace=auth-server"
+    "dev:gateway": "npm run dev --workspace=gateway",
+    "dev:torrent": "npm run dev --workspace=torrent",
+    "dev:user": "npm run dev --workspace=user",
+    "dev:auth": "npm run dev --workspace=auth"
 
   },
   "author": "Du Than",

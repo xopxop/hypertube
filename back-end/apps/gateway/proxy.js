@@ -1,9 +1,9 @@
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import {
-  AUTH_SERVER_PORT,
-  USER_SERVER_PORT,
-  TORRENT_SERVER_PORT,
+  AUTH_SERVICE_PORT,
+  USER_SERVICE_PORT,
+  TORRENT_SERVICE_PORT,
   authApiPath,
   userApiPath,
   torrentApiPath,
@@ -11,24 +11,24 @@ import {
 
 const proxyRoutes = express.Router();
 
-const authServerPath = `http://localhost:${AUTH_SERVER_PORT}`;
-const torrentServerPath = `http://localhost:${TORRENT_SERVER_PORT}`;
-const userServerPath = `http://localhost:${USER_SERVER_PORT}`;
+const authSERVICEPath = `http://localhost:${AUTH_SERVICE_PORT}`;
+const torrentSERVICEPath = `http://localhost:${TORRENT_SERVICE_PORT}`;
+const userSERVICEPath = `http://localhost:${USER_SERVICE_PORT}`;
 
 proxyRoutes.use(
   authApiPath,
   createProxyMiddleware({
-    target: authServerPath,
+    target: authSERVICEPath,
     changeOrigin: true,
     pathRewrite: {
       "^/api/auth": "",
     },
     on: {
       proxyReq: (proxyReq, req, res) => {
-        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${authServerPath}${proxyReq.path}`);
+        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${authSERVICEPath}${proxyReq.path}`);
       },
       error: (err, req, res) => {
-        console.error(`[PROXY ERROR] Auth server unavailable:`, err.message);
+        console.error(`[PROXY ERROR] Auth SERVICE unavailable:`, err.message);
         res.status(503).json({ error: "Auth service unavailable" });
       },
     },
@@ -38,17 +38,17 @@ proxyRoutes.use(
 proxyRoutes.use(
   torrentApiPath,
   createProxyMiddleware({
-    target: torrentServerPath,
+    target: torrentSERVICEPath,
     changeOrigin: true,
     pathRewrite: {
       "^/api/torrent": "",
     },
     on: {
       proxyReq: (proxyReq, req, res) => {
-        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${torrentServerPath}${proxyReq.path}`);
+        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${torrentSERVICEPath}${proxyReq.path}`);
       },
       error: (err, req, res) => {
-        console.error(`[PROXY ERROR] Torrent server unavailable:`, err.message);
+        console.error(`[PROXY ERROR] Torrent SERVICE unavailable:`, err.message);
         res.status(503).json({ error: "Torrent service unavailable" });
       },
     },
@@ -58,17 +58,17 @@ proxyRoutes.use(
 proxyRoutes.use(
   userApiPath,
   createProxyMiddleware({
-    target: userServerPath,
+    target: userSERVICEPath,
     changeOrigin: true,
     pathRewrite: {
       "^/api/user": "",
     },
     on: {
       proxyReq: (proxyReq, req, res) => {
-        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${userServerPath}${proxyReq.path}`);
+        console.log(`[PROXY] ${req.method} ${req.originalUrl} -> ${userSERVICEPath}${proxyReq.path}`);
       },
       error: (err, req, res) => {
-        console.error(`[PROXY ERROR] User server unavailable:`, err.message);
+        console.error(`[PROXY ERROR] User SERVICE unavailable:`, err.message);
         res.status(503).json({ error: "User service unavailable" });
       },
     },

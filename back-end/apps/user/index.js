@@ -10,5 +10,5 @@ app.use(json());
 app.use('/', routes);
 
 app.listen(PORT, () => {
-  console.log(`✅ User server running on http://localhost:${PORT}`);
+  console.log(`✅ User SERVICE running on http://localhost:${PORT}`);
 });

@@ -12,5 +12,5 @@ app.use("/", middlewareRoutes);
 app.use("/", proxyRoutes);
 
 app.listen(PORT, () => {
-  console.log(`✅ Gateway server running on http://localhost:${PORT}`);
+  console.log(`✅ Gateway SERVICE running on http://localhost:${PORT}`);
 });

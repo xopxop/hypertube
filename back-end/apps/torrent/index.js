@@ -46,5 +46,5 @@ app.get('/stream', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Torrent server running on http://localhost:${PORT}`);
+  console.log(`✅ Torrent SERVICE running on http://localhost:${PORT}`);
 });
