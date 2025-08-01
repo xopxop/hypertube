@@ -1,0 +1,38 @@
+<div class="movie-list-container">
+  <h1>Movies</h1>
+  
+  <div class="movies-grid">
+    @for (movie of movies(); track movie.id) {
+      <mat-card class="movie-card">
+        <mat-card-header>
+          <mat-card-title>{{ movie.title }}</mat-card-title>
+          <mat-card-subtitle>{{ movie.year }} • {{ movie.duration }}min</mat-card-subtitle>
+        </mat-card-header>
+        
+        <img mat-card-image [src]="movie.poster" [alt]="movie.title">
+        
+        <mat-card-content>
+          <div class="rating">
+            <mat-icon>star</mat-icon>
+            <span>{{ movie.rating }}/10</span>
+          </div>
+          
+          <div class="genres">
+            @for (genre of movie.genre; track genre) {
+              <mat-chip>{{ genre }}</mat-chip>
+            }
+          </div>
+          
+          <p class="description">{{ movie.description }}</p>
+        </mat-card-content>
+        
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="playMovie(movie)">
+            <mat-icon>play_arrow</mat-icon>
+            Watch Now
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+</div>

@@ -1,9 +1,3 @@
-<div style="padding: 2rem; text-align: center;">
-  <h2>Hypertube Torrent Player</h2>
-  <input [(ngModel)]="magnet" placeholder="Paste magnet link..." style="width: 80%;" />
-  <button (click)="loadVideo()">Load Video</button>
-
-  <div *ngIf="videoUrl()">
-    <video controls autoplay width="720" [src]="videoUrl()"></video>
-  </div>
-</div>
+<app-header />
+<app-content />
+<app-footer />
