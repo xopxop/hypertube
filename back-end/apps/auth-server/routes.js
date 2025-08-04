@@ -1,9 +1,10 @@
 import { compare, hash } from 'bcrypt';
 import { Router } from 'express';
 import { JWT_SECRET, JWT_EXPIRATION } from './config.js';
+import { User } from '../../db/models/user.model.js';
+
 import jwt from 'jsonwebtoken';
 const { sign } = jwt;
-import { User } from '../../db/models/user.model.js';
 
 const routes = Router();
 
