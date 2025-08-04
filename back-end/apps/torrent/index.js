@@ -1,8 +1,10 @@
 import express from 'express';
+import cors from 'cors';
 import { PORT } from './config.js';
 import { Movie } from '../../db/models/movie.model.js';
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get('/movies', async (req, res) => {
