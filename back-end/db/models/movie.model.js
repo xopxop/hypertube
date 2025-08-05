@@ -33,11 +33,11 @@ export const Movie = {
    * @returns {Promise<Movie>}
    */
   async create(data) {
-    const { title, year, genre, rating, posterUrl, description, duration } = data;
+    const { title, year, genre, rating, posterUrl, magnetLink, description, duration } = data;
     console.log('Creating movie:', data);
     const result = await pool.query(
-      "INSERT INTO movies (title, year, genre, rating, poster_url, description, duration) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [title, year, genre, rating, posterUrl, description, duration]
+      "INSERT INTO movies (title, year, genre, rating, poster_url, magnet_link, description, duration) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      [title, year, genre, rating, posterUrl, magnetLink, description, duration]
     );
     return result.rows[0];
   },

@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS movies (
   genre TEXT[] NOT NULL,
   rating FLOAT CHECK (rating >= 0 AND rating <= 10),
   poster_url TEXT,
+  magnet_link TEXT,
   description TEXT,
   duration INT NOT NULL
 );

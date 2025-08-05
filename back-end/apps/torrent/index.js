@@ -10,6 +10,7 @@ app.use(express.json());
 app.get('/movies', async (req, res) => {
   try {
     const movies = await Movie.findAll();
+    console.log('📽️ Fetched movies:', movies);
     res.json(movies);
   } catch (error) {
     console.error('❌ Error fetching movies:', error);
@@ -18,8 +19,8 @@ app.get('/movies', async (req, res) => {
 });
 
 app.post('/movie', async (req, res) => {
-  const { title, year, genre, rating, posterUrl, description, duration } = req.body;
-  if (!title || !year || !genre || genre.length === 0 || !rating || !posterUrl || !description || !duration) {
+  const { title, year, genre, rating, posterUrl, magnetLink, description, duration } = req.body;
+  if (!title || !year || !genre || genre.length === 0 || !rating || !posterUrl || !description || !duration || !magnetLink) {
     return res.status(400).send('All fields are required');
   };
   console.log(genre);
@@ -30,6 +31,7 @@ app.post('/movie', async (req, res) => {
       genre,
       rating,
       posterUrl,
+      magnetLink,
       description,
       duration
     });
