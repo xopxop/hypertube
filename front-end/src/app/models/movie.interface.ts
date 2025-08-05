@@ -4,8 +4,8 @@ export interface Movie {
   year: number;
   genre: string[];
   rating: number;
-  poster: string;
+  poster_url: string;
+  magnet_link: string;
   description: string;
   duration: number;
-  magnetLink?: string;
 }

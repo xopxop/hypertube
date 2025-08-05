@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { HomePage } from "../../home-page/home-page.component";
+import { HomePage } from "./torrent/torrent.component";
 import { Login } from "./login/login.component";
 import { MovieList } from "./movie-list/movie-list.component";
 import { Signup } from "./signup/signup.component";
@@ -7,11 +7,11 @@ import { Signup } from "./signup/signup.component";
 export const routes: Routes = [
   {
     path: '',
-    component: HomePage
+    component: MovieList
   },
   {
-    path: 'movies',
-    component: MovieList
+    path: 'stream',
+    component: HomePage
   },
   {
     path: 'login',

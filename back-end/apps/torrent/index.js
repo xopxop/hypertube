@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import { PORT } from './config.js';
 import { Movie } from '../../db/models/movie.model.js';
+import WebTorrent from 'webtorrent';
+
+const client = new WebTorrent();
 
 const app = express();
 app.use(cors());
@@ -23,7 +26,6 @@ app.post('/movie', async (req, res) => {
   if (!title || !year || !genre || genre.length === 0 || !rating || !posterUrl || !description || !duration || !magnetLink) {
     return res.status(400).send('All fields are required');
   };
-  console.log(genre);
   try {
     const newMovie = await Movie.create({
       title,
@@ -38,6 +40,34 @@ app.post('/movie', async (req, res) => {
     res.status(201).json(newMovie);
   } catch (error) {
     console.error('❌ Error creating movie:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.put('/movie/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, year, genre, rating, posterUrl, magnetLink, description, duration } = req.body;
+  if (!title || !year || !genre || genre.length === 0 || !rating || !posterUrl || !description || !duration || !magnetLink) {
+    return res.status(400).send('All fields are required');
+  }
+  try {
+    const movie = await Movie.findById(id);
+    if (!movie) {
+      return res.status(404).send('Movie not found');
+    }
+    await Movie.update(id, {
+      title,
+      year,
+      genre,
+      rating,
+      posterUrl,
+      magnetLink,
+      description,
+      duration
+    });
+    res.json(movie);
+  } catch (error) {
+    console.error('❌ Error updating movie:', error);
     res.status(500).send('Internal Server Error');
   }
 });

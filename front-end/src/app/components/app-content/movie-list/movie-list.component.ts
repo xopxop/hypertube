@@ -6,6 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { Movie } from '../../../models/movie.interface';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
@@ -16,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class MovieList {
   movies = signal<Movie[]>([]);
 
-  constructor(private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient, private readonly router: Router) {
   }
 
   ngOnInit() {
@@ -28,5 +29,8 @@ export class MovieList {
 
   playMovie(movie: Movie) {
     console.log('Playing movie:', movie.title);
+    if (movie.magnet_link) {
+      this.router.navigate(['/stream'], { queryParams: { magnet: movie.magnet_link } });
+    }
   }
 }
