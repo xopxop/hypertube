@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET, torrentApiPath, userApiPath } from "./config.js";
+import { JWT_SECRET, movieApiPath, userApiPath } from "./config.js";
 
 const middlewareRoutes = express.Router();
 
@@ -30,7 +30,7 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-middlewareRoutes.use(torrentApiPath, verifyToken);
+middlewareRoutes.use(movieApiPath, verifyToken);
 middlewareRoutes.use(userApiPath, verifyToken);
 
 export default middlewareRoutes;
