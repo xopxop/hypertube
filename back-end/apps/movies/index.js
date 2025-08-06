@@ -1,14 +1,39 @@
 import express from 'express';
 import cors from 'cors';
-import { PORT } from './config.js';
+import { PORT, GATEWAY_SERVICE_PORT } from './config.js';
 import { Movie } from '../../db/models/movie.model.js';
 import WebTorrent from 'webtorrent';
 
 const client = new WebTorrent();
 
+// Middleware to restrict access to only localhost:3000 (gateway)
+const restrictToGateway = (req, res, next) => {
+  const host = req.headers['host'];
+  const referer = req.headers['referer'];
+  const origin = req.headers['origin'];
+  const xForwardedHost = req.headers['x-forwarded-host'];
+  
+  const isFromGateway = xForwardedHost === 'localhost:3000' || 
+                       (referer && referer.includes('localhost:3000')) ||
+                       (origin && origin.includes('localhost:3000'));
+  
+  if (isFromGateway) {
+    console.log(`✅ Authorized request from gateway (localhost:3000)`);
+    return next();
+  }
+  
+  console.log(`❌ Blocked request - Only localhost:3000 (gateway) access allowed`);
+  res.status(403).json({ 
+    error: 'Forbidden: Direct access not allowed.',
+    details: 'This service only accepts requests from localhost:3000 (gateway service).'
+  });
+};
+
 const app = express();
+app.set('trust proxy', true); // Trust proxy headers for IP detection
 app.use(cors());
 app.use(express.json());
+app.use(restrictToGateway);
 
 app.get('/movies', async (req, res) => {
   try {

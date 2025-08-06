@@ -30,7 +30,7 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-middlewareRoutes.use(movieApiPath, verifyToken);
+// middlewareRoutes.use(movieApiPath, verifyToken);
 middlewareRoutes.use(userApiPath, verifyToken);
 
 export default middlewareRoutes;

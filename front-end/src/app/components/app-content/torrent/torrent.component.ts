@@ -25,6 +25,6 @@ export class HomePage {
   }
 
   getStreamUrl(magnet: string): string {
-    return `http://localhost:3002/stream?magnet=${encodeURIComponent(magnet)}`;
+    return `http://localhost:3000/api/movie/stream?magnet=${encodeURIComponent(magnet)}`;
   }
 }

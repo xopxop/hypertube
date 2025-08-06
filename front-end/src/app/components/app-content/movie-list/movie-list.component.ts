@@ -21,7 +21,7 @@ export class MovieList {
   }
 
   ngOnInit() {
-    this.http.get<Movie[]>('http://localhost:3002/movies').subscribe((data: Movie[]) => {
+    this.http.get<Movie[]>('http://localhost:3000/api/movie/movies').subscribe((data: Movie[]) => {
       this.movies.set(data);
       console.log('Movies loaded:', this.movies());
     });
