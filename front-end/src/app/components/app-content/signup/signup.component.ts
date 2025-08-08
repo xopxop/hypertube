@@ -6,8 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SignupRequest } from '../../../models/user.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +22,11 @@ export class Signup {
   hideConfirmPassword = signal(true);
   isLoading = signal(false);
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private readonly http: HttpClient,
+    private readonly router: Router
+  ) {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -56,12 +61,25 @@ export class Signup {
       this.isLoading.set(true);
       const signupData: SignupRequest = this.signupForm.value;
       
+      this.http.post<SignupRequest>('http://localhost:3000/api/auth/signup', signupData).subscribe({
+        next: (response) => {
+          console.log('Signup successful:', response);
+          this.isLoading.set(false);
+          this.router.navigate(['/login']);
+          // Handle successful signup logic here, e.g., redirect to login page
+        },
+        error: (error) => {
+          console.error('Signup error:', error);
+          this.isLoading.set(false);
+          // Handle error logic here, e.g., show error message
+        }
+      });
       // Simulate API call
-      setTimeout(() => {
-        console.log('Signup attempt:', signupData);
-        this.isLoading.set(false);
-        // Handle signup logic here
-      }, 1000);
+      // setTimeout(() => {
+      //   console.log('Signup attempt:', signupData);
+      //   this.isLoading.set(false);
+      //   // Handle signup logic here
+      // }, 1000);
     }
   }
 

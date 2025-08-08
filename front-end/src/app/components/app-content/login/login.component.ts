@@ -6,8 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LoginRequest } from '../../../models/user.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,11 @@ export class Login {
   hidePassword = signal(true);
   isLoading = signal(false);
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private readonly http: HttpClient,
+    private readonly router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -32,12 +37,18 @@ export class Login {
       this.isLoading.set(true);
       const loginData: LoginRequest = this.loginForm.value;
       
-      // Simulate API call
-      setTimeout(() => {
-        console.log('Login attempt:', loginData);
-        this.isLoading.set(false);
-        // Handle login logic here
-      }, 1000);
+      this.http.post('http://localhost:3000/api/auth/login', loginData).subscribe({
+        next: (response) => {
+          console.log('Login successful:', response);
+          this.isLoading.set(false);
+          this.router.navigate(['']);
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+          this.isLoading.set(false);
+          // Handle error logic here, e.g., show an error message
+        }
+      });
     }
   }
 

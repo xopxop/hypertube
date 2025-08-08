@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { PORT, GATEWAY_SERVICE_PORT } from './config.js';
-import { Movie } from '../../db/models/movie.model.js';
+import { MovieRepository } from '../../db/repositories/movie.repository.js';
 import WebTorrent from 'webtorrent';
 
 const client = new WebTorrent();
@@ -37,7 +37,7 @@ app.use(restrictToGateway);
 
 app.get('/movies', async (req, res) => {
   try {
-    const movies = await Movie.findAll();
+    const movies = await MovieRepository.findAll();
     console.log('📽️ Fetched movies:', movies);
     res.json(movies);
   } catch (error) {
@@ -52,7 +52,7 @@ app.post('/movie', async (req, res) => {
     return res.status(400).send('All fields are required');
   };
   try {
-    const newMovie = await Movie.create({
+    const newMovie = await MovieRepository.create({
       title,
       year,
       genre,
@@ -76,11 +76,11 @@ app.put('/movie/:id', async (req, res) => {
     return res.status(400).send('All fields are required');
   }
   try {
-    const movie = await Movie.findById(id);
+    const movie = await MovieRepository.findById(id);
     if (!movie) {
       return res.status(404).send('Movie not found');
     }
-    await Movie.update(id, {
+    await MovieRepository.update(id, {
       title,
       year,
       genre,
@@ -138,5 +138,5 @@ app.get('/stream', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ MOVIE SERVICE running on http://localhost:${PORT}`);
+  console.log(`✅ Movie SERVICE running on http://localhost:${PORT}`);
 });
